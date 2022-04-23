@@ -1,0 +1,11 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+  color: #876831;
+  a {
+    padding: 20px;
+  }
+}

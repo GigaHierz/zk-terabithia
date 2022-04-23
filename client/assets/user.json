@@ -1,0 +1,25 @@
+{
+  "user": "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4",
+  "nfts": [
+    {
+      "contract_address": "aaaa",
+      "token_id": 2
+    },
+    {
+      "contract_address": "bb",
+      "token_id": 3
+    },
+    {
+      "contract_address": "eee",
+      "token_id": 3000
+    },
+    {
+      "contract_address": "cc",
+      "token_id": 6
+    },
+    {
+      "contract_address": "dd",
+      "token_id": 99
+    }
+  ]
+}
