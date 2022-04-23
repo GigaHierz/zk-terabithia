@@ -25,7 +25,7 @@ export default function Layout ({ children }: { children: any }) {
         <div className={styles.page}>
           <div className={styles.center}>
             <Header></Header>
-            <Menu></Menu>
+            {/* <Menu></Menu> */}
 
             <main className={styles.main}>{children}</main>
             <Footer></Footer>
