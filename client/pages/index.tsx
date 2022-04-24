@@ -120,13 +120,13 @@ const Home: NextPage = () => {
                 className={styled.button}
                 onClick={() => updateAmountState(100)}
               >
-                100 aETH
+                100 WETH
               </button>
               <button
                 className={styled.button}
                 onClick={() => updateAmountState(200)}
               >
-                200 aETH
+                200 WETH
               </button>
             </div>
             <div className={styled.flexColumn}>
@@ -134,13 +134,13 @@ const Home: NextPage = () => {
                 className={styled.button}
                 onClick={() => updateAmountState(300)}
               >
-                300 aETH
+                300 WETH
               </button>
               <button
                 className={styled.button}
                 onClick={() => updateAmountState(400)}
               >
-                400 aETH
+                400 WETH
               </button>
             </div>
           </div>
