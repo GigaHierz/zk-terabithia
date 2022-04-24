@@ -16,10 +16,6 @@
     justify-content: center;
   }
 
-  //   .button {
-  //     min-height: 40px;
-  //     min-width: 140px;
-  // }
   a {
     background-color: #663399;
     color: #eaeaea;
@@ -31,4 +27,137 @@
     padding: 8px 30px;
     cursor: pointer;
   }
+}
+
+.tab {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 0;
+  margin: 0.5rem 1rem;
+  width: 11rem;
+  background: transparent;
+  color: #663399;
+  border: 2px solid white;
+
+  &:hover {
+    background-color: rgb(232, 215, 215);
+  }
+}
+
+.button {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 0;
+  margin: 2rem 1rem;
+  width: 5rem;
+  background: transparent;
+  color: #663399;
+  border: 2px solid white;
+  &:hover {
+    background-color: rgb(232, 215, 215);
+  }
+  &:disabled {
+    background-color: rgb(232, 215, 215);
+  }
+}
+
+.selected {
+  background-color: #663399;
+  color: white;
+}
+
+.buttonLarge {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 0;
+  margin: 3rem 1rem;
+  width: 35rem;
+  height: 5rem;
+  background: transparent;
+  color: #663399;
+  border: 2px solid white;
+  background-color: #bd93d8;
+  &:hover {
+    background-color: rgb(232, 215, 215);
+  }
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.text {
+  font-size: larger;
+  margin: 0.5rem 1rem;
+  text-align: center;
+}
+
+.infoText {
+  font-size: small;
+  margin: 0.5rem 3rem;
+  text-align: center;
+}
+
+.label {
+  font-size: small;
+  margin: 0.5rem 1rem;
+}
+
+.zkContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 2px solid white;
+  padding: 2rem;
+  margin: 2rem;
+  width: 40rem;
+  height: 40rem;
+}
+
+.input {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  width: 35rem;
+  height: 4rem;
+  background: transparent;
+  color: #663399;
+
+  border: 2px solid white;
+}
+.selectlist {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  width: 35rem;
+  height: 4rem;
+  background: transparent;
+  color: #663399;
+
+  border: 2px solid white;
+}
+
+.selectItem {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  width: 35rem;
+  height: 4rem;
+  background: transparent;
+  color: #663399;
+
+  border: 2px solid white;
+  font-size: larger;
 }

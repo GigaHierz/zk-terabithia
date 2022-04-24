@@ -4,11 +4,17 @@
   flex-direction: row;
   justify-content: space-between;
   color: #663399;
+  height: 100px;
   .centerItems {
     display: flex;
     flex-direction: row;
     .logo {
-      width: 40px;
+      width: 50px;
+      height: 40px;
+      margin: 20px;
+    }
+    .logoText {
+      width: 130px;
       height: 40px;
       margin: 20px;
     }
