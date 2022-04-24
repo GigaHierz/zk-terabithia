@@ -1,10 +1,19 @@
 import { NextPage } from 'next'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { Contract, ethers } from 'ethers'
+import { createAlchemyWeb3 } from '@alch/alchemy-web3'
 
 import Layout from '../components/Layout'
 import styled from '../styles/Home.module.scss'
+import ZkMaiaPolygonContract from '../../artifacts/contracts/ZkMaiaPolygon.sol/ZkMaiaPolygon.json'
 
+const alchemyKey =
+  'wss://polygon-mumbai.g.alchemy.com/v2/nHLIrYl6PMIXygat2AA9bT0fO1B6atyN'
+const web3 = createAlchemyWeb3(alchemyKey)
 const Home: NextPage = () => {
+  const [contract, setContract] = useState(useRef<Contract>({} as Contract))
+  const provider = useRef<ethers.providers.AlchemyProvider>()
+
   const [userState, setUserState] = useState<string>('deposit')
   const [amountState, setAmountState] = useState<string>()
   const [noteState, setNoteState] = useState<string>()
@@ -13,12 +22,25 @@ const Home: NextPage = () => {
   const [coinState, setCoinState] = useState<string>()
   const [selectedChainState, setSelectedChainState] = useState<string>()
 
+  const contractAddress = '0x7AB373eD3fdA97bf05e492bbf7607D47a718d5Eb'
+
+  console.log(ZkMaiaPolygonContract)
+
+  const zkMaiaContract = new web3.eth.Contract(
+    ZkMaiaPolygonContract.abi as any,
+    contractAddress
+  )
+
   const handleChange = event => {
     setSelectedChainState(event.target.value)
   }
 
   const deposit = () => {
     console.log('promting the wallet')
+
+    // for showing
+    zkMaiaContract?.methods.exitTerabithia({ value: amountState })
+    // zkMaiaContract?.methods._processDeposit({ value: amountState })
 
     // tokenContract.safeMint(signer, { value: price })
     // if (true) {
@@ -37,6 +59,10 @@ const Home: NextPage = () => {
   }
   const withdraw = () => {
     console.log('promting the wallet')
+
+    // for showing
+    zkMaiaContract?.methods._processWithdraw()
+    // zkMaiaContract?.methods._processDeposit({ value: amountState })
 
     setHashState('')
 
@@ -63,7 +89,7 @@ const Home: NextPage = () => {
     }
   }
   const updateAmountState = (amount: number) => {
-    const ethAmount = amount / 2
+    const ethAmount = amount
     setAmountState(ethAmount.toString())
   }
 
@@ -118,29 +144,29 @@ const Home: NextPage = () => {
             <div className={styled.flexColumn}>
               <button
                 className={styled.button}
-                onClick={() => updateAmountState(100)}
+                onClick={() => updateAmountState(0.01)}
               >
-                100 WETH
+                0.01 WETH
               </button>
               <button
                 className={styled.button}
-                onClick={() => updateAmountState(200)}
+                onClick={() => updateAmountState(0.1)}
               >
-                200 WETH
+                0.1 WETH
               </button>
             </div>
             <div className={styled.flexColumn}>
               <button
                 className={styled.button}
-                onClick={() => updateAmountState(300)}
+                onClick={() => updateAmountState(1)}
               >
-                300 WETH
+                1 WETH
               </button>
               <button
                 className={styled.button}
-                onClick={() => updateAmountState(400)}
+                onClick={() => updateAmountState(10)}
               >
-                400 WETH
+                10 WETH
               </button>
             </div>
           </div>
@@ -208,11 +234,7 @@ const Home: NextPage = () => {
               onChange={event => setRecepientAddressState(event.target.value)}
               placeholder={'0xAddress'}
             ></input>
-            <button
-              disabled={!noteState && !recepientAddressState}
-              className={styled.buttonLarge}
-              onClick={withdraw}
-            >
+            <button className={styled.buttonLarge} onClick={withdraw}>
               Withdraw
             </button>
 

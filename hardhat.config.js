@@ -20,7 +20,16 @@ module.exports = {
   defaultNetwork: 'matic_testnet',
   networks: {
     matic_testnet: {
-      url: 'https://rpc-mumbai.maticvigil.com',
+      url:
+        'https://polygon-mumbai.g.alchemy.com/v2/nHLIrYl6PMIXygat2AA9bT0fO1B6atyN',
+      accounts: [
+        `ef4ccaa9a703ab1e4185e4add3497429fa83670484d1aaae934a279480f93729`
+      ],
+      gasPrice: 8000000000
+    },
+    optimism_testnet: {
+      url:
+        'https://opt-kovan.g.alchemy.com/v2/hgwUXoiHCEtfEIoqpBg1WdQl9oRUngBS',
       accounts: [
         `ef4ccaa9a703ab1e4185e4add3497429fa83670484d1aaae934a279480f93729`
       ],

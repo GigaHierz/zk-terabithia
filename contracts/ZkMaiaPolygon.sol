@@ -47,7 +47,7 @@ contract ZkMaiaPolygon is ERC20 {
         WETHGateway = IWETHGateway(wethGatewayAddr);
     }
 
-    function EnterTerabithia() public payable {
+    function enterTerabithia() public payable {
         uint256 amount = msg.value;
 
         // compute share of pool in ETH
@@ -57,13 +57,13 @@ contract ZkMaiaPolygon is ERC20 {
             localTotal;
 
         // deposit ETH
-        DepositToLendingPool(amount);
+        depositToLendingPool(amount);
 
         // mint SHARE
         _mint(msg.sender, share);
     }
 
-    function ExitTerabithia(address to) public {
+    function exitTerabithia(address to) public {
         // get original amount put in + interest earned
         uint256 share = balances[msg.sender];
         _burn(msg.sender, share);
@@ -76,12 +76,12 @@ contract ZkMaiaPolygon is ERC20 {
             address(this)
         );
         uint256 amount = (share * poolBal) / totalSupply();
-        WithdrawFromLendingPool(amount, address(this));
+        withdrawFromLendingPool(amount, address(this));
         transferFrom(address(this), to, amount);
         // to.transfer(amount);
     }
 
-    function DepositToLendingPool(uint256 amount) private {
+    function depositToLendingPool(uint256 amount) private {
         // After deposit msg.sender receives the aToken
         IWETHGateway(wethGatewayAddr).depositETH{value: amount}(
             poolAddr,
@@ -90,7 +90,7 @@ contract ZkMaiaPolygon is ERC20 {
         );
     }
 
-    function WithdrawFromLendingPool(uint256 amount, address to) private {
+    function withdrawFromLendingPool(uint256 amount, address to) private {
         // calling contract should have enough credit limit
         IAToken(ATokenAddress).approve(wethGatewayAddr, amount);
 
