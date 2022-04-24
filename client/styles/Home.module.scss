@@ -40,7 +40,7 @@
   margin: 0.5rem 1rem;
   width: 11rem;
   background: transparent;
-  color: white;
+  color: #663399;
   border: 2px solid white;
 
   &:hover {
@@ -55,14 +55,16 @@
   margin: 2rem 1rem;
   width: 5rem;
   background: transparent;
-  // color: ${Colors.brandSecondary};
+  color: #663399;
   border: 2px solid white;
   &:hover {
     background-color: grey;
   }
-  &.selected {
-    background-color: blue;
-  }
+}
+
+.selected {
+  background-color: #663399;
+  color: white;
 }
 
 .buttonLarge {
@@ -73,7 +75,7 @@
   width: 35rem;
   height: 5rem;
   background: transparent;
-  color: white;
+  color: #663399;
   border: 2px solid white;
   &:hover {
     background-color: grey;
@@ -83,12 +85,14 @@
 .flexrow {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .flexColumn {
   display: flex;
   flex-direction: column;
   align-items: baseline;
+  justify-content: space-between;
 }
 
 .text {
@@ -120,7 +124,8 @@
   width: 35rem;
   height: 4rem;
   background: transparent;
-  color: white;
+  color: #663399;
+
   border: 2px solid white;
 }
 .selectlist {
@@ -131,7 +136,8 @@
   width: 35rem;
   height: 4rem;
   background: transparent;
-  color: white;
+  color: #663399;
+
   border: 2px solid white;
 }
 
@@ -143,7 +149,8 @@
   width: 35rem;
   height: 4rem;
   background: transparent;
-  color: white;
+  color: #663399;
+
   border: 2px solid white;
   font-size: larger;
 }

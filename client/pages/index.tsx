@@ -60,22 +60,40 @@ const Home: NextPage = () => {
         privacy.
       </p>
       <div className={styled.flexrow}>
-        <button
-          id='deposit'
-          className={styled.tab}
-          selected={Boolean(userState === 'deposit')}
-          onClick={() => updateUserState('deposit')}
-        >
-          Deposit
-        </button>
-        <button
-          id='withdraw'
-          className={styled.tab}
-          selected={userState !== 'deposit'}
-          onClick={() => updateUserState('withdraw')}
-        >
-          Withdraw
-        </button>
+        {userState === 'deposit' ? (
+          <button
+            id='deposit'
+            className={styled.selected}
+            onClick={() => updateUserState('deposit')}
+          >
+            Deposit
+          </button>
+        ) : (
+          <button
+            id='deposit'
+            className={styled.tab}
+            onClick={() => updateUserState('deposit')}
+          >
+            Deposit
+          </button>
+        )}
+        {userState === 'deposit' ? (
+          <button
+            id='withdraw'
+            className={styled.tab}
+            onClick={() => updateUserState('withdraw')}
+          >
+            Withdraw
+          </button>
+        ) : (
+          <button
+            id='withdraw'
+            className={styled.selected}
+            onClick={() => updateUserState('withdraw')}
+          >
+            Withdraw
+          </button>
+        )}
       </div>
 
       {userState === 'deposit' ? (
