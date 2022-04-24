@@ -5,11 +5,11 @@ import Layout from '../components/Layout'
 import styled from '../styles/Home.module.scss'
 
 const Home: NextPage = () => {
-  const [userState, setUserState] = useState<string>()
+  const [userState, setUserState] = useState<string>('deposit')
   const [amountState, setAmountState] = useState<string>()
   const [noteState, setNoteState] = useState<string>()
   const [recepientAddressState, setRecepientAddressState] = useState<string>()
-  const [contractInterface, setContractInterface] = useState()
+  const [hashState, setHashState] = useState<string>()
   const [selectedChainState, setSelectedChainState] = useState<string>()
 
   const handleChange = event => {
@@ -26,9 +26,18 @@ const Home: NextPage = () => {
     //   setUserState(false)
     // }
     // contract.deposit({ value: 0.1 })
+    setHashState('Loading...')
+
+    setTimeout(() => {
+      setHashState(`This is your HASH. Please keep it safe. If you loose it we won\'t
+      be able to retrace it.
+     0x32c907f5b88c7c5f6e26d16d`)
+    }, 1500)
   }
   const withdraw = () => {
     console.log('promting the wallet')
+
+    setHashState('')
 
     // TODO: check noteState and recepientAddressState
     // contract.withdraw({ value: 0.1 })
@@ -104,13 +113,13 @@ const Home: NextPage = () => {
                 className={styled.button}
                 onClick={() => updateAmountState(100)}
               >
-                100aETH
+                100 aETH
               </button>
               <button
                 className={styled.button}
                 onClick={() => updateAmountState(200)}
               >
-                200aETH
+                200 aETH
               </button>
             </div>
             <div className={styled.flexColumn}>
@@ -118,22 +127,23 @@ const Home: NextPage = () => {
                 className={styled.button}
                 onClick={() => updateAmountState(300)}
               >
-                300aETH
+                300 aETH
               </button>
               <button
                 className={styled.button}
                 onClick={() => updateAmountState(400)}
               >
-                400aETH
+                400 aETH
               </button>
             </div>
           </div>
-          <p className={styled.flexrow}>
+          <p className={styled.text}>
             {amountState || '0'} ETH will be deposited{' '}
           </p>
           <button className={styled.buttonLarge} onClick={deposit}>
             Deposit
           </button>
+          {hashState ? <p className={styled.text}>{hashState}</p> : ''}
         </div>
       ) : (
         <div className={styled.zkContainer}>

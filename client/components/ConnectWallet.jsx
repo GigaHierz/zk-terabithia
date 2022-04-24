@@ -58,7 +58,7 @@ const ConnectWallet = () => {
 
 const useStyles = makeStyles(theme => ({
   btn: {
-    background: 'rgb(183,192,238)',
+    background: '#663399',
     cursor: 'pointer',
     border: 0,
     outline: 'none',
