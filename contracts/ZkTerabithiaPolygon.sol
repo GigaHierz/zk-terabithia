@@ -1,25 +1,23 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.10;
 
 import "hardhat/console.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
+
+import "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/ERC20.sol";
 
 // Aave Contracts Interfaces
-import '@aave/core-v3/contracts/interfaces/IPool.sol';
-import '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
-import '@aave/core-v3/contracts/interfaces/IPoolAddressesProviderRegistry.sol';
-import '@aave/periphery-v3/contracts/misc/interfaces/IWETHGateway.sol';
+import "@aave/core-v3/contracts/interfaces/IPool.sol";
+import "@aave/core-v3/contracts/interfaces/IPoolDataProvider.sol";
+import "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
+import "@aave/core-v3/contracts/interfaces/IPoolAddressesProviderRegistry.sol";
+import "@aave/periphery-v3/contracts/misc/interfaces/IWETHGateway.sol";
+import "@aave/core-v3/contracts/misc/AaveProtocolDataProvider.sol";
 
 // Token Interfaces
-import '@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol';
-import '@aave/periphery-v3/contracts/misc/interfaces/IWETH.sol';
-import '@aave/core-v3/contracts/interfaces/IAToken.sol';
+import "@aave/periphery-v3/contracts/misc/interfaces/IWETH.sol";
+import "@aave/core-v3/contracts/interfaces/IAToken.sol";
 
-contract ZkTerabithiaPolygon is ERC20, ERC20Detailed {
-    string public name = "ZKT";
-    string public symbol = "ZKT";
-
+contract ZkTerabithiaPolygon is ERC20 {
     IPoolAddressesProvider provider;
     IPoolAddressesProviderRegistry IPAPRegistry;
     IWETHGateway WETHGateway;
@@ -31,74 +29,72 @@ contract ZkTerabithiaPolygon is ERC20, ERC20Detailed {
 
     mapping(address => uint256) balances;
 
-    // ERC20 Tokens
-    address public constant matic = 0x0000000000000000000000000000000000001010;
-    address public constant wMatic = 0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270;
-    address public constant usdc = 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174;
-    address public constant wEth = 0x96f3f560e9ef26a3d71da27349d2ed68f066b295;
-
     // Aave Tokens
     /// address =   WETH-AToken-Polygon
-    IAToken public constant aToken = IAToken(0x685bF4eab23993E94b4CFb9383599c926B66cF57); 
+    address ATokenAddress = 0x685bF4eab23993E94b4CFb9383599c926B66cF57;
 
-    event LogDeposit(address tokenAddress, address depositor, uint256 amount);
-    event LogWithdraw(address tokenAddress, address caller, uint256 amount);
+    constructor() ERC20("ZKT", "ZKT") {
+        // Retrieve Polygon Testnet LendingPool address
+        // for other addresses: https://docs.aave.com/developers/deployed-contracts/v3-testnet-addresses
+        provider = IPoolAddressesProvider(poolAddr);
 
-    constructor() ERC20Detailed(name, symbol, 18) {
-      // Retrieve Polygon Testnet LendingPool address
-      // for other addresses: https://docs.aave.com/developers/deployed-contracts/v3-testnet-addresses
-      IPoolAddressesProvider provider = LendingPoolAddressesProvider(
-          poolAddr
-      );
-
-      IPoolAddressesProviderRegistry internal constant IPAPRegistry = IPoolAddressesProviderRegistry(0xE0987FC9EDfcdcA3CB9618510AaF1D565f4960A6);
-      IWETHGateway internal constant WETHGateway = IWETHGateway(wethGatewayAddr);
-    }
-
-    function EnterTerabithia() payable {
-      uint256 amount = msg.value;
-
-      // compute share of pool in ETH
-      uint256 totalABal = IAToken(ATokenAddress).balanceOf(address(this));
-      uint256 localTotal = totalSupply();
-      uint256 share = (localTotal * (totalABal + amount) / totalABal) - localTotal;
-
-      // deposit ETH
-      DepositToLendingPool(amount);
-
-      // mint SHARE
-      _mint(msg.sender, share);
-    }
-
-    function ExitTerabithia(address to) {
-      // get original amount put in + interest earned
-      uint256 share = balances[msg.sender];
-      _burn(msg.sender, share);
-      uint256 amount = share * poolBal / totalSupply();
-      WithdrawFromLendingPool(amount, address(this));
-      to.transfer(amount);
-    }
-
-    function DepositToLendingPool(uint256 amount) {
         // Get provider lending pool
-        IPool lendingPool = IPool(provider.getLendingPool());
+        lendingPool = IPool(provider.getPool());
 
+        IPAPRegistry = IPoolAddressesProviderRegistry(
+            0xE0987FC9EDfcdcA3CB9618510AaF1D565f4960A6
+        );
+        WETHGateway = IWETHGateway(wethGatewayAddr);
+    }
+
+    function EnterTerabithia() public payable {
+        uint256 amount = msg.value;
+
+        // compute share of pool in ETH
+        uint256 totalABal = IAToken(ATokenAddress).balanceOf(address(this));
+        uint256 localTotal = totalSupply();
+        uint256 share = ((localTotal * (totalABal + amount)) / totalABal) -
+            localTotal;
+
+        // deposit ETH
+        DepositToLendingPool(amount);
+
+        // mint SHARE
+        _mint(msg.sender, share);
+    }
+
+    function ExitTerabithia(address to) public {
+        // get original amount put in + interest earned
+        uint256 share = balances[msg.sender];
+        _burn(msg.sender, share);
+
+        AaveProtocolDataProvider dataProvider = AaveProtocolDataProvider(
+            provider.getPoolDataProvider()
+        );
+        (uint256 poolBal, , , , , , , , ) = dataProvider.getUserReserveData(
+            ATokenAddress,
+            address(this)
+        );
+        uint256 amount = (share * poolBal) / totalSupply();
+        WithdrawFromLendingPool(amount, address(this));
+        transferFrom(address(this), to, amount);
+        // to.transfer(amount);
+    }
+
+    function DepositToLendingPool(uint256 amount) private {
         // After deposit msg.sender receives the aToken
         IWETHGateway(wethGatewayAddr).depositETH{value: amount}(
-            lendingPool,
+            poolAddr,
             address(this),
             0
         );
     }
 
-    function WithdrawFromLendingPool(uint256 amount, address to) {
-        // Get provider lending pool
-        IPool lendingPool = IPool(provider.getLendingPool());
-
+    function WithdrawFromLendingPool(uint256 amount, address to) private {
         // calling contract should have enough credit limit
         IAToken(ATokenAddress).approve(wethGatewayAddr, amount);
 
         // Withdrawn amount will be send to to address
-        IWETHGateway(wethGatewayAddr).withdrawETH(lendingPool, amount, to);
+        IWETHGateway(wethGatewayAddr).withdrawETH(poolAddr, amount, to);
     }
 }
