@@ -19,7 +19,7 @@ export default function Layout ({ children }: { children: any }) {
             href='https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nunito+Sans:wght@200&display=swap'
             rel='stylesheet'
           ></link>
-          <title>ZK-Terabithia</title>
+          <title>zk-maia</title>
         </Head>
 
         <div className={styles.page}>

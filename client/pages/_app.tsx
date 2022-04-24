@@ -5,10 +5,10 @@ import { GlobalStyle } from '../styles/styles'
 
 function MyApp ({ Component, pageProps }: AppProps) {
   return (
-    <React.Fragment>
+    <>
       <GlobalStyle />
       <Component {...pageProps} />
-    </React.Fragment>
+    </>
   )
 }
 

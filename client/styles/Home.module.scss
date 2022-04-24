@@ -32,3 +32,108 @@
     cursor: pointer;
   }
 }
+
+.tab {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 0;
+  margin: 0.5rem 1rem;
+  width: 11rem;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+
+  &:hover {
+    background-color: grey;
+  }
+}
+
+.button {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 0;
+  margin: 2rem 1rem;
+  width: 5rem;
+  background: transparent;
+  // color: ${Colors.brandSecondary};
+  border: 2px solid white;
+}
+
+.buttonLarge {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 0;
+  margin: 3rem 1rem;
+  width: 35rem;
+  height: 5rem;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+}
+
+.text {
+  font-size: larger;
+  margin: 0.5rem 1rem;
+}
+
+.label {
+  font-size: small;
+  margin: 0.5rem 1rem;
+}
+
+.zkContainer {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid white;
+  padding: 2rem;
+  margin: 2rem;
+  width: 40rem;
+  height: 40rem;
+}
+
+.input {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  width: 35rem;
+  height: 4rem;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+.selectlist {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  width: 35rem;
+  height: 4rem;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.selectItem {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  width: 35rem;
+  height: 4rem;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  font-size: larger;
+}

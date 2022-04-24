@@ -18,7 +18,7 @@ const providerOptions = {
   coinbasewallet: {
     package: CoinbaseWalletSDK, // Required
     options: {
-      appName: 'zk-terabithia', // Required
+      appName: 'zk-maia', // Required
       rpc:
         'https://polygon-mumbai.g.alchemy.com/v2/nHLIrYl6PMIXygat2AA9bT0fO1B6atyN', // Optional if `infuraId` is provided; otherwise it's required
       chainId: 80001, // Optional. It defaults to 1 if not provided
