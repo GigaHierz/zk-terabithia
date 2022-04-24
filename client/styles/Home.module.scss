@@ -16,10 +16,6 @@
     justify-content: center;
   }
 
-  //   .button {
-  //     min-height: 40px;
-  //     min-width: 140px;
-  // }
   a {
     background-color: #663399;
     color: #eaeaea;
@@ -77,6 +73,7 @@
   background: transparent;
   color: #663399;
   border: 2px solid white;
+  background-color: #bd93d8;
   &:hover {
     background-color: rgb(232, 215, 215);
   }
@@ -101,6 +98,12 @@
   text-align: center;
 }
 
+.infoText {
+  font-size: small;
+  margin: 0.5rem 3rem;
+  text-align: center;
+}
+
 .label {
   font-size: small;
   margin: 0.5rem 1rem;
@@ -109,6 +112,7 @@
 .zkContainer {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   border: 2px solid white;
   padding: 2rem;
   margin: 2rem;

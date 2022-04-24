@@ -10,6 +10,7 @@ const Home: NextPage = () => {
   const [noteState, setNoteState] = useState<string>()
   const [recepientAddressState, setRecepientAddressState] = useState<string>()
   const [hashState, setHashState] = useState<string>()
+  const [coinState, setCoinState] = useState<string>()
   const [selectedChainState, setSelectedChainState] = useState<string>()
 
   const handleChange = event => {
@@ -41,6 +42,12 @@ const Home: NextPage = () => {
 
     // TODO: check noteState and recepientAddressState
     // contract.withdraw({ value: 0.1 })
+
+    setCoinState('Loading...')
+
+    setTimeout(() => {
+      setCoinState(`your funds have been transferred to your account.`)
+    }, 1500)
   }
 
   const updateUserState = (state: string) => {
@@ -143,7 +150,7 @@ const Home: NextPage = () => {
           <button className={styled.buttonLarge} onClick={deposit}>
             Deposit
           </button>
-          {hashState ? <p className={styled.text}>{hashState}</p> : ''}
+          {hashState ? <p className={styled.infoText}>{hashState}</p> : ''}
         </div>
       ) : (
         <div className={styled.zkContainer}>
@@ -200,6 +207,8 @@ const Home: NextPage = () => {
             <button className={styled.buttonLarge} onClick={withdraw}>
               Withdraw
             </button>
+
+            {coinState ? <p className={styled.infoText}>{coinState}</p> : ''}
           </div>
         </div>
       )}
