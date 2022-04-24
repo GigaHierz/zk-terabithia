@@ -8,6 +8,8 @@ export default function Layout ({ children }: { children: any }) {
   return (
     <>
       <div className={styles.pageframe}>
+        {/* <img className={styles.logo} src='/bgr.jpg' alt='' /> */}
+
         <Head>
           <link rel='preconnect' href='https://fonts.googleapis.com'></link>
           <link
@@ -19,7 +21,7 @@ export default function Layout ({ children }: { children: any }) {
             href='https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nunito+Sans:wght@200&display=swap'
             rel='stylesheet'
           ></link>
-          <title>ZK-Terabithia</title>
+          <title>zk-maia</title>
         </Head>
 
         <div className={styles.page}>

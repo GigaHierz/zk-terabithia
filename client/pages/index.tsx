@@ -1,117 +1,15 @@
 import { NextPage } from 'next'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import Layout from '../components/Layout'
-import styles from '../styles/Home.module.scss'
-import { Colors } from '../styles/styles'
-
-const Tab = styled.button<{ selected: boolean }>`
-  display: inline-block;
-  border-radius: 3px;
-  padding: 0.5rem 0;
-  margin: 0.5rem 1rem;
-  width: 11rem;
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-
-  :&hover {
-    background-color: grey;
-  }
-
-  background-color: ${({ selected }) =>
-    selected ? `${Colors.brandSecondary}` : `${Colors.brandPrimary}`};
-`
-const Button = styled.button`
-  display: inline-block;
-  border-radius: 3px;
-  padding: 0.5rem 0;
-  margin: 2rem 1rem;
-  width: 16rem;
-  background: transparent;
-  color: ${Colors.brandSecondary};
-  border: 2px solid white;
-`
-const ButtonLarge = styled.button`
-  display: inline-block;
-  border-radius: 3px;
-  padding: 0.5rem 0;
-  margin: 3rem 1rem;
-  width: 35rem;
-  height: 5rem;
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-`
-const FlexRow = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-const FlexColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-`
-const Text = styled.p`
-  font-size: larger;
-  margin: 0.5rem 1rem;
-`
-const Label = styled.label`
-  font-size: large;
-  margin: 0.5rem 1rem;
-`
-const ZkContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 2px solid white;
-  padding: 2rem;
-  margin: 2rem;
-  width: 40rem;
-  height: 40rem;
-`
-
-const Input = styled.input`
-  display: inline-block;
-  border-radius: 3px;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 1rem;
-  width: 35rem;
-  height: 4rem;
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-`
-const SelectList = styled.select`
-  display: inline-block;
-  border-radius: 3px;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 1rem;
-  width: 35rem;
-  height: 4rem;
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-`
-const SelectItem = styled.option`
-  display: inline-block;
-  border-radius: 3px;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 1rem;
-  width: 35rem;
-  height: 4rem;
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-  font-size: larger;
-`
+import styled from '../styles/Home.module.scss'
 
 const Home: NextPage = () => {
-  const [userState, setUserState] = useState<string>()
+  const [userState, setUserState] = useState<string>('deposit')
   const [amountState, setAmountState] = useState<string>()
   const [noteState, setNoteState] = useState<string>()
   const [recepientAddressState, setRecepientAddressState] = useState<string>()
-  const [contractInterface, setContractInterface] = useState()
+  const [hashState, setHashState] = useState<string>()
   const [selectedChainState, setSelectedChainState] = useState<string>()
 
   const handleChange = event => {
@@ -128,16 +26,34 @@ const Home: NextPage = () => {
     //   setUserState(false)
     // }
     // contract.deposit({ value: 0.1 })
+    setHashState('Loading...')
+
+    setTimeout(() => {
+      setHashState(`This is your HASH. Please keep it safe. If you loose it we won\'t
+      be able to retrace it.
+     0x32c907f5b88c7c5f6e26d16d`)
+    }, 1500)
   }
   const withdraw = () => {
     console.log('promting the wallet')
+
+    setHashState('')
 
     // TODO: check noteState and recepientAddressState
     // contract.withdraw({ value: 0.1 })
   }
 
   const updateUserState = (state: string) => {
-    state === 'deposit' ? setUserState('deposit') : setUserState('withdraw')
+    if (state === 'deposit') {
+      setUserState('deposit')
+      const button = document.getElementById('deposit')
+      button.classList.add('selected')
+    }
+    if (state !== 'deposit') {
+      setUserState('withdraw')
+      const button = document.getElementById('withdraw')
+      button.classList.add('selected')
+    }
   }
   const updateAmountState = (amount: number) => {
     const ethAmount = amount / 2
@@ -146,70 +62,146 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <h2>ZK- Terabithia</h2>
-      <Text className={styles.intro}>
-        Zk-terabithia is a zero-knowledge proof cross-chain bridge that allows
-        to deposit, lend and withdraw crypto at a low cost without compromising
+      <h2>ZK-Maia</h2>
+      <p className={styled.text}>
+        ZK-Maia is a zero-knowledge proof cross-chain bridge that allows to
+        deposit, lend and withdraw crypto at a low cost without compromising
         privacy.
-      </Text>
-      <FlexRow>
-        <Tab
-          selected={userState === 'deposit'}
-          onClick={() => updateUserState('deposit')}
-        >
-          Deposit
-        </Tab>
-        <Tab
-          selected={userState !== 'deposit'}
-          onClick={() => updateUserState('withdraw')}
-        >
-          Withdraw
-        </Tab>
-      </FlexRow>
+      </p>
+      <div className={styled.flexrow}>
+        {userState === 'deposit' ? (
+          <button
+            id='deposit'
+            className={styled.selected}
+            onClick={() => updateUserState('deposit')}
+          >
+            Deposit
+          </button>
+        ) : (
+          <button
+            id='deposit'
+            className={styled.tab}
+            onClick={() => updateUserState('deposit')}
+          >
+            Deposit
+          </button>
+        )}
+        {userState === 'deposit' ? (
+          <button
+            id='withdraw'
+            className={styled.tab}
+            onClick={() => updateUserState('withdraw')}
+          >
+            Withdraw
+          </button>
+        ) : (
+          <button
+            id='withdraw'
+            className={styled.selected}
+            onClick={() => updateUserState('withdraw')}
+          >
+            Withdraw
+          </button>
+        )}
+      </div>
 
       {userState === 'deposit' ? (
-        <ZkContainer>
-          <FlexColumn>
-            <FlexRow>
-              <Button onClick={() => updateAmountState(100)}>100aETH</Button>
-              <Button onClick={() => updateAmountState(200)}>200aETH</Button>
-            </FlexRow>
-            <FlexRow>
-              <Button onClick={() => updateAmountState(300)}>300aETH</Button>
-              <Button onClick={() => updateAmountState(400)}>400aETH</Button>
-            </FlexRow>
-          </FlexColumn>
-          <Text>{amountState || '0'} ETH will be deposited </Text>
-          <ButtonLarge onClick={deposit}>Deposit</ButtonLarge>
-        </ZkContainer>
+        <div className={styled.zkContainer}>
+          <div className={styled.flexrow}>
+            <div className={styled.flexColumn}>
+              <button
+                className={styled.button}
+                onClick={() => updateAmountState(100)}
+              >
+                100 aETH
+              </button>
+              <button
+                className={styled.button}
+                onClick={() => updateAmountState(200)}
+              >
+                200 aETH
+              </button>
+            </div>
+            <div className={styled.flexColumn}>
+              <button
+                className={styled.button}
+                onClick={() => updateAmountState(300)}
+              >
+                300 aETH
+              </button>
+              <button
+                className={styled.button}
+                onClick={() => updateAmountState(400)}
+              >
+                400 aETH
+              </button>
+            </div>
+          </div>
+          <p className={styled.text}>
+            {amountState || '0'} ETH will be deposited{' '}
+          </p>
+          <button className={styled.buttonLarge} onClick={deposit}>
+            Deposit
+          </button>
+          {hashState ? <p className={styled.text}>{hashState}</p> : ''}
+        </div>
       ) : (
-        <ZkContainer>
-          <FlexColumn>
-            <Label>Choose your Blockchain</Label>
-            <SelectList value={selectedChainState} onChange={handleChange}>
-              <SelectItem value='avalanche'>Avalanche</SelectItem>
-              <SelectItem value='binance'>Binance</SelectItem>
-              <SelectItem value='ethereum'>Ethereum</SelectItem>
-            </SelectList>
-          </FlexColumn>
-          <FlexColumn>
-            <Label>Note</Label>
-            <Input
-              type='text'
+        <div className={styled.zkContainer}>
+          <div className={styled.flexColumn}>
+            <label className={styled.label}>Choose your Blockchain</label>
+            <select
+              className={styled.selectlist}
+              value={selectedChainState}
+              onChange={handleChange}
+            >
+              <option className={styled.selectItem} value='avalanche'>
+                Avalanche
+              </option>
+              <option className={styled.selectItem} value='binance'>
+                Binance
+              </option>
+              <option className={styled.selectItem} value='ethereum'>
+                Ethereum
+              </option>
+              <option className={styled.selectItem} value='optimism'>
+                Optimism
+              </option>
+              <option className={styled.selectItem} value='aave'>
+                Aave
+              </option>
+              <option className={styled.selectItem} value='bnb'>
+                Binance
+              </option>
+              <option className={styled.selectItem} value='fantom'>
+                Fantom
+              </option>
+              <option className={styled.selectItem} value='polygon'>
+                Polygon
+              </option>
+            </select>
+          </div>
+          <div className={styled.flexColumn}>
+            <label className={styled.label}>Note</label>
+            <input
+              className={styled.input}
+              type='p'
               onChange={event => setNoteState(event.target.value)}
               placeholder={'hash'}
-            ></Input>
-          </FlexColumn>
-          <FlexColumn>
-            <Label>Recepient Address</Label>
-            <Input
-              type='text'
+            ></input>
+          </div>
+          <div className={styled.flexColumn}>
+            <label className={styled.label}>Recepient Address</label>
+            <input
+              className={styled.input}
+              type='p'
               onChange={event => setRecepientAddressState(event.target.value)}
               placeholder={'0xAddress'}
-            ></Input>
-            <ButtonLarge onClick={withdraw}>Withdraw</ButtonLarge>
-          </FlexColumn>
-        </ZkContainer>
+            ></input>
+            <button className={styled.buttonLarge} onClick={withdraw}>
+              Withdraw
+            </button>
+          </div>
+        </div>
       )}
     </Layout>
   )
