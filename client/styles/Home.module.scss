@@ -56,6 +56,9 @@
   &:hover {
     background-color: rgb(232, 215, 215);
   }
+  &:disabled {
+    background-color: rgb(232, 215, 215);
+  }
 }
 
 .selected {

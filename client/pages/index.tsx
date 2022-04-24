@@ -147,7 +147,11 @@ const Home: NextPage = () => {
           <p className={styled.text}>
             {amountState || '0'} ETH will be deposited{' '}
           </p>
-          <button className={styled.buttonLarge} onClick={deposit}>
+          <button
+            disabled={!amountState}
+            className={styled.buttonLarge}
+            onClick={deposit}
+          >
             Deposit
           </button>
           {hashState ? <p className={styled.infoText}>{hashState}</p> : ''}
@@ -204,7 +208,11 @@ const Home: NextPage = () => {
               onChange={event => setRecepientAddressState(event.target.value)}
               placeholder={'0xAddress'}
             ></input>
-            <button className={styled.buttonLarge} onClick={withdraw}>
+            <button
+              disabled={!noteState && !recepientAddressState}
+              className={styled.buttonLarge}
+              onClick={withdraw}
+            >
               Withdraw
             </button>
 
