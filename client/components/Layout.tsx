@@ -8,6 +8,8 @@ export default function Layout ({ children }: { children: any }) {
   return (
     <>
       <div className={styles.pageframe}>
+        {/* <img className={styles.logo} src='/bgr.jpg' alt='' /> */}
+
         <Head>
           <link rel='preconnect' href='https://fonts.googleapis.com'></link>
           <link

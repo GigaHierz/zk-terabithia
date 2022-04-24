@@ -57,6 +57,12 @@
   background: transparent;
   // color: ${Colors.brandSecondary};
   border: 2px solid white;
+  &:hover {
+    background-color: grey;
+  }
+  &.selected {
+    background-color: blue;
+  }
 }
 
 .buttonLarge {
@@ -69,6 +75,9 @@
   background: transparent;
   color: white;
   border: 2px solid white;
+  &:hover {
+    background-color: grey;
+  }
 }
 
 .flexrow {
@@ -85,6 +94,7 @@
 .text {
   font-size: larger;
   margin: 0.5rem 1rem;
+  text-align: center;
 }
 
 .label {

@@ -13,6 +13,9 @@ export default function Header () {
           <Link href='/'>
             <img className={styles.logo} src='/zk_logo.png' alt='' />
           </Link>
+          <Link href='/'>
+            <img className={styles.logoText} src='/logo_text.png' alt='' />
+          </Link>
         </div>
 
         <ConnectWallet />

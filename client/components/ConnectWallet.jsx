@@ -32,7 +32,6 @@ const ConnectWallet = () => {
 
   const handleClickConnect = async () => {
     await connectWallet()
-    console.log('connect wallet')
   }
 
   const handleClickAddress = () => {

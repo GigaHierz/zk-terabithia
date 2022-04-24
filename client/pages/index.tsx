@@ -35,7 +35,16 @@ const Home: NextPage = () => {
   }
 
   const updateUserState = (state: string) => {
-    state === 'deposit' ? setUserState('deposit') : setUserState('withdraw')
+    if (state === 'deposit') {
+      setUserState('deposit')
+      const button = document.getElementById('deposit')
+      button.classList.add('selected')
+    }
+    if (state !== 'deposit') {
+      setUserState('withdraw')
+      const button = document.getElementById('withdraw')
+      button.classList.add('selected')
+    }
   }
   const updateAmountState = (amount: number) => {
     const ethAmount = amount / 2
@@ -44,21 +53,23 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <h2>ZK- Terabithia</h2>
-      <p>
-        zk-maia is a zero-knowledge proof cross-chain bridge that allows to
+      <h2>ZK-Maia</h2>
+      <p className={styled.text}>
+        ZK-Maia is a zero-knowledge proof cross-chain bridge that allows to
         deposit, lend and withdraw crypto at a low cost without compromising
         privacy.
       </p>
       <div className={styled.flexrow}>
         <button
+          id='deposit'
           className={styled.tab}
-          selected={userState === 'deposit'}
+          selected={Boolean(userState === 'deposit')}
           onClick={() => updateUserState('deposit')}
         >
           Deposit
         </button>
         <button
+          id='withdraw'
           className={styled.tab}
           selected={userState !== 'deposit'}
           onClick={() => updateUserState('withdraw')}
@@ -123,6 +134,21 @@ const Home: NextPage = () => {
               </option>
               <option className={styled.selectItem} value='ethereum'>
                 Ethereum
+              </option>
+              <option className={styled.selectItem} value='optimism'>
+                Optimism
+              </option>
+              <option className={styled.selectItem} value='aave'>
+                Aave
+              </option>
+              <option className={styled.selectItem} value='bnb'>
+                Binance
+              </option>
+              <option className={styled.selectItem} value='fantom'>
+                Fantom
+              </option>
+              <option className={styled.selectItem} value='polygon'>
+                Polygon
               </option>
             </select>
           </div>
