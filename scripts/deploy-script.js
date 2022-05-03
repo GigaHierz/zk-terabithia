@@ -15,11 +15,15 @@ async function main () {
 
   // We get the contract to deploy
   const ZkMaiaPolygon = await hre.ethers.getContractFactory('ZkMaiaPolygon')
-  const zkMaiaPolygon = await ZkMaiaPolygon.deploy()
+  const ZkMaiaOptimism = await hre.ethers.getContractFactory('ZkMaiaOptimism')
+  // const zkMaiaPolygon = await ZkMaiaPolygon.deploy()
+  const zkMaiaOptimism = await ZkMaiaOptimism.deploy()
 
-  await zkMaiaPolygon.deployed()
+  // await zkMaiaPolygon.deployed()
+  await zkMaiaOptimism.deployed()
 
-  console.log('Greeter deployed to:', zkMaiaPolygon.address)
+  // console.log('ZkMaiaPolygon deployed to:', zkMaiaPolygon.address)
+  console.log('ZkMaiaOptimism deployed to:', zkMaiaOptimism.address)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
