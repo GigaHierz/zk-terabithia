@@ -35,7 +35,7 @@ contract ZkMaiaOptimism is ERC20 {
     address ATokenAddress = 0xCb5Df0b49BCa05B2478a606074ec39e3fa181a6f;
 
     constructor() ERC20("ZKM", "ZKM") {
-        // Retrieve Polygon Testnet LendingPool address
+        // Retrieve Optimism Testnet LendingPool address
         // for other addresses: https://docs.aave.com/developers/deployed-contracts/v3-testnet-addresses
         provider = IPoolAddressesProvider(poolAddr);
 
